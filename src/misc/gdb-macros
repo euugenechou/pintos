@@ -5,6 +5,7 @@
 # Use "help user-defined" for help.
 #
 # Author: Godmar Back <gback@cs.vt.edu>, Feb 2006
+#         Eugene Chou <euchou@ucsc.edu>, Feb 2024
 #
 # $Id: gdb-macros,v 1.1 2006-04-07 18:29:34 blp Exp $
 #
@@ -33,20 +34,72 @@ define dumplist
         printf "\n"
     end
 end
-
 document dumplist
-    Dump the content of a Pintos list, 
+    Dump the content of a Pintos list,
     invoke as dumplist name_of_list name_of_struct name_of_elem_in_list_struct
+end
+
+define stack
+    # Hack for default count value.
+    if $argc > 0
+        set $count = $arg0
+    else
+        set $count = 8
+    end
+
+    # Hack for default offset value.
+    if $argc > 1
+        set $offset = $arg1
+    else
+        set $offset = 0
+    end
+
+    set $i = 0
+    set $addr = $esp + $offset
+
+    while $i != $count
+    	# Show count, byte offset, then distance from base pointer.
+        printf "["
+        printf "%02d:%04d|", $i, ($i * sizeof(void *))
+        if $addr == $esp
+            printf " esp"
+        else
+            if $addr == $ebp
+                printf " ebp"
+            else
+                printf "%+04d", ((int)$addr - (int)$ebp)
+            end
+        end
+        printf "] "
+
+	# Show address and value.
+        printf "%p -> ", $addr
+        output/x *(int *)$addr
+
+        set $addr = $addr + sizeof(void *)
+        set $i = $i + 1
+        printf "\n"
+    end
+end
+document stack
+    usage: stack [count] [offset]
+
+    shows [count] stack values starting from address $esp + [offset]
+    row format: [count:byte offset] address -> value
+
+    arguments:
+        count 	number of elements to dump [default: 8]
+        offset  starting offset from $esp [default: 0]
 end
 
 # print a thread's backtrace, given a pointer to the struct thread *
 define btthread
-   if $arg0 == ($esp - ((unsigned)$esp % 4096)) 
+   if $arg0 == ($esp - ((unsigned)$esp % 4096))
 	bt
    else
-       set $saveEIP = $eip 
-       set $saveESP = $esp 
-       set $saveEBP = $ebp 
+       set $saveEIP = $eip
+       set $saveESP = $esp
+       set $saveEBP = $ebp
 
        set $esp = ((struct thread *)$arg0)->stack
        set $ebp = ((void**)$esp)[2]
