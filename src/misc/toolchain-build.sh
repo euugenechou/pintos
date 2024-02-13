@@ -211,9 +211,6 @@ if [ $tool == "all" -o $tool == "gdb" ]; then
   make install
 fi
 
-# Remove the keyring.
-rm -f gnu-keyring.gpg
-
 echo "************************************************************"
 echo "*                                                          *"
 echo "* Congratulations! You've built the cross-compiler!        *"
