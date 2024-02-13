@@ -49,16 +49,8 @@ download_and_check()
 
   echo "Downloaded and verified $src from $1"
   if [ ! -d $dir ]; then
-    echo "Extracting $src to $fdirname..."
-    if [ $src == *.tar.gz ]; then
-      tar xzf $src
-    elif [ $src == *.tar.bz2 ]; then
-      tar xjf $src
-    elif [ $src == *.tar.xz ]; then
-      tar xJf $src
-    else
-      perror "Unrecognized archive extension $src"
-    fi
+    echo "Extracting $src to $dir..."
+    tar xzf $src
   else
     echo "$src is already extracted"
   fi
