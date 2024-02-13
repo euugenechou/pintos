@@ -185,8 +185,12 @@ fi
 if [ $tool == "all" -o $tool == "binutils" ]; then
   echo "Building binutils..."
   mkdir -p $CWD/build/binutils && cd $CWD/build/binutils
-  ../../src/$BINUTILS_VER/configure --prefix=$PREFIX --target=$TARGET \
-    --disable-multilib --disable-nls --disable-werror || perror "Failed to configure binutils"
+  ../../src/$BINUTILS_VER/configure \
+    --prefix=$PREFIX \
+    --target=$TARGET \
+    --disable-multilib \
+    --disable-nls \
+    --disable-werror || perror "Failed to configure binutils"
   make -j8 || perror "Failed to make binutils"
   make install
 fi
@@ -194,9 +198,17 @@ fi
 if [ $tool == "all" -o $tool == "gcc" ]; then
   echo "Building GCC..."
   mkdir -p $CWD/build/gcc && cd $CWD/build/gcc
-  ../../src/$GCC_VER/configure CXXFLAGS="-fpermissive" --prefix=$PREFIX --target=$TARGET \
-    --disable-multilib --disable-nls --disable-werror --disable-libssp \
-    --disable-libmudflap --with-newlib --without-headers --enable-languages=c,c++ || perror "Failed to configure gcc"
+  ../../src/$GCC_VER/configure CXXFLAGS="-fpermissive" \
+    --prefix=$PREFIX \
+    --target=$TARGET \
+    --disable-multilib \
+    --disable-nls \
+    --disable-werror \
+    --disable-libssp \
+    --disable-libmudflap \
+    --with-newlib \
+    --without-headers \
+    --enable-languages=c,c++ || perror "Failed to configure gcc"
   make -j8 all-gcc  || perror "Failed to make gcc"
   make install-gcc
   make all-target-libgcc || perror "Failed to libgcc"
@@ -206,7 +218,15 @@ fi
 if [ $tool == "all" -o $tool == "gdb" ]; then
   echo "Building gdb..."
   mkdir -p $CWD/build/gdb && cd $CWD/build/gdb
-  ../../src/$GDB_VER/configure --prefix=$PREFIX --target=$TARGET --disable-werror || perror "Failed to configure gdb"
+  ../../src/$GDB_VER/configure \
+    --prefix=$PREFIX \
+    --target=$TARGET \
+    --disable-nls \
+    --disable-werror \
+    --with-system-readline \
+    --with-python=`which python3` \
+    --with-system-gdbinit=/etc/gdb/gdbinit \
+    --disable-werror || perror "Failed to configure gdb"
   make -j8 || perror "Failed to make gdb"
   make install
 fi
