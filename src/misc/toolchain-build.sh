@@ -175,8 +175,9 @@ GDB_SRC="https://ftp.gnu.org/gnu/binutils/$GDB_VER.tar.gz"
 GDB_SIG="https://ftp.gnu.org/gnu/binutils/$GDB_VER.tar.gz.sig"
 
 # Download GPG keyring
-if [[ ! -f https://ftp.gnu.org/gnu/gnu-keyring.gpg ]]; then
+if [[ ! -f $CWD/gnu-keyring.gpg ]]; then
   wget https://ftp.gnu.org/gnu/gnu-keyring.gpg
+  mv gnu-keyring.gpg $CWD/.
 fi
 
 # Download sources
