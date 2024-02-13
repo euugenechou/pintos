@@ -18,6 +18,7 @@ cd /tmp
 mkdir $$
 cd $$
 git clone https://github.com/bochs-emu/Bochs bochs
+git checkout REL_2_7_FINAL
 cd bochs/bochs
 
 os="`uname`"
