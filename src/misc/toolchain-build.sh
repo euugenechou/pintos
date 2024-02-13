@@ -166,13 +166,13 @@ BINUTILS_SIG="https://ftp.gnu.org/gnu/binutils/$BINUTILS_VER.tar.gz.sig"
 
 # Latest as of 2024-02-13
 GCC_VER="gcc-13.2"
-GCC_SRC="https://ftp.gnu.org/gnu/binutils/$GCC_VER.tar.gz"
-GCC_SIG="https://ftp.gnu.org/gnu/binutils/$GCC_VER.tar.gz.sig"
+GCC_SRC="https://ftp.gnu.org/gnu/gcc/$GCC_VER.tar.gz"
+GCC_SIG="https://ftp.gnu.org/gnu/gcc/$GCC_VER.tar.gz.sig"
 
 # Latest as of 2024-02-13
 GDB_VER="gdb-14.1"
-GDB_SRC="https://ftp.gnu.org/gnu/binutils/$GDB_VER.tar.gz"
-GDB_SIG="https://ftp.gnu.org/gnu/binutils/$GDB_VER.tar.gz.sig"
+GDB_SRC="https://ftp.gnu.org/gnu/gdb/$GDB_VER.tar.gz"
+GDB_SIG="https://ftp.gnu.org/gnu/gdb/$GDB_VER.tar.gz.sig"
 
 # Download GPG keyring
 if [[ ! -f $CWD/gnu-keyring.gpg ]]; then
