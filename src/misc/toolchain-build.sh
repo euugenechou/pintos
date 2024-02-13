@@ -65,7 +65,7 @@ usage()
     -h, --help           Display this message
 
     -p, --prefix PATH    Install the executables to PATH, instead of the default
-                         DEST_DIR/dist
+                         DEST_DIR
 
     DEST_DIR             Base directory to store the downloeaded source code,
                          build and distribute the compiled toolchain.
@@ -125,14 +125,13 @@ if [ $# -eq 2 ]; then
 fi
 
 os="`uname`"
-dist="`uname -m`"
 
-mkdir -p $1/{src,$dist,build} || perror "Failed to create toolchain source and build directories"
+mkdir -p $1/{src,$build} || perror "Failed to create toolchain source and build directories"
 
 CWD=$(cd $1 && pwd)
 if [ -z "$PREFIX" ]; then
   # if prefix is not set, we use the dist dir as the default prefix
-  PREFIX=$CWD/$dist
+  PREFIX=$CWD
 else
   if [[ $PREFIX != /* ]]; then
     echo "Prefix must be an absolute path, got '$PREFIX'"
